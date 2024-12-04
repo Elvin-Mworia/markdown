@@ -131,5 +131,40 @@ abstract class Handler<T> {
           return;
           }
           }
+          //checks whether the current class can handle the request
           protected abstract CanHandle(request : T) : boolean;
           }
+ /**looks to see if the text starts with a tag. If it
+does, we set the boolean part of our tuple to true and use substr to get the
+remainder of our text. */         
+class LineParser {
+            public Parse(value : string, tag : string) : [boolean, string] {
+            let output : [boolean, string] = [false, ""];
+            output[1] = value;
+            if (value === "") {
+            return output;
+            }
+            let split = value.startsWith(`${tag}`);if (split) {
+            output[0] = true;
+            output[1] = value.substr(tag.length);
+            }
+            return output;
+            }
+            }
+
+class ParseChainHandler extends Handler<ParseElement> {
+            private readonly visitable : IVisitable = new Visitable();
+            protected CanHandle(request: ParseElement): boolean {
+              let split = new LineParser().Parse(request.CurrentLine, this.tagType);
+              if (split[0]){
+              request.CurrentLine = split[1];
+              this.visitable.Accept(this.visitor, request, this.document);
+              }
+              return split[0];
+              }
+            constructor(private readonly document : IMarkdownDocument,
+            private readonly tagType : string,
+            private readonly visitor : IVisitor) {
+            super();
+            }
+            }

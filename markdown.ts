@@ -67,3 +67,14 @@ class MarkdownDocument implements IMarkdownDocument {
 class ParseElement {
         CurrentLine : string = "";
         }
+
+interface IVisitor {
+  Visit(token : ParseElement, markdownDocument : IMarkdownDocument) :
+  void;
+  }
+interface IVisitable {
+  Accept(visitor : IVisitor, token : ParseElement, markdownDocument :
+  IMarkdownDocument) : void;
+  }
+
+  

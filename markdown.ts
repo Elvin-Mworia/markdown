@@ -110,4 +110,10 @@ class HorizontalRuleVisitor extends VisitorBase {
       super(TagType.HorizontalRule, new TagTypeToHtml());
       }
       }
-  
+      
+class Visitable implements IVisitable {
+        Accept(visitor: IVisitor, token: ParseElement, markdownDocument:
+        IMarkdownDocument): void {
+        visitor.Visit(token, markdownDocument);
+        }
+        }

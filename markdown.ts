@@ -179,3 +179,27 @@ class ParagraphHandler extends Handler<ParseElement> {
                 super();
                 }
                 }
+//handler for h1 with associated "#" tag
+class Header1ChainHandler extends ParseChainHandler {
+                  constructor(document : IMarkdownDocument) {
+                  super(document, "# ", new Header1Visitor());
+                  }
+                  }
+//handler for h2 with associated "##" tag
+class Header2ChainHandler extends ParseChainHandler {
+                  constructor(document : IMarkdownDocument) {
+                  super(document, "## ", new Header2Visitor());
+                  }
+                  }
+//handler for h3 with associated "###" tag                  
+class Header3ChainHandler extends ParseChainHandler {
+                  constructor(document : IMarkdownDocument) {
+                  super(document, "### ", new Header3Visitor());
+                  }
+                  }
+//handler for hr with associated "---" tag
+class HorizontalRuleHandler extends ParseChainHandler {
+                  constructor(document : IMarkdownDocument) {
+                  super(document, "---", new HorizontalRuleVisitor());
+                  }
+                  }

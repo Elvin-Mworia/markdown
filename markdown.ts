@@ -76,7 +76,7 @@ interface IVisitable {
   Accept(visitor : IVisitor, token : ParseElement, markdownDocument :
   IMarkdownDocument) : void;
   }
-  abstract class VisitorBase implements IVisitor {
+abstract class VisitorBase implements IVisitor {
     constructor (private readonly tagType : TagType, private readonly TagTypeToHtml : TagTypeToHtml) {}
     Visit(token: ParseElement, markdownDocument: IMarkdownDocument): void
     {
@@ -85,3 +85,29 @@ interface IVisitable {
     this.TagTypeToHtml.ClosingTag(this.tagType));
     }
     }
+
+class Header1Visitor extends VisitorBase {
+      constructor() {
+      super(TagType.Header1, new TagTypeToHtml());
+      }
+      }
+class Header2Visitor extends VisitorBase {constructor() {
+      super(TagType.Header2, new TagTypeToHtml());
+      }
+      }
+class Header3Visitor extends VisitorBase {
+      constructor() {
+      super(TagType.Header3, new TagTypeToHtml());
+      }
+      }
+class ParagraphVisitor extends VisitorBase {
+      constructor() {
+      super(TagType.Paragraph, new TagTypeToHtml());
+      }
+      }
+class HorizontalRuleVisitor extends VisitorBase {
+      constructor() {
+      super(TagType.HorizontalRule, new TagTypeToHtml());
+      }
+      }
+  

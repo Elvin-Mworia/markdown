@@ -110,10 +110,26 @@ class HorizontalRuleVisitor extends VisitorBase {
       super(TagType.HorizontalRule, new TagTypeToHtml());
       }
       }
-      
+
 class Visitable implements IVisitable {
         Accept(visitor: IVisitor, token: ParseElement, markdownDocument:
         IMarkdownDocument): void {
         visitor.Visit(token, markdownDocument);
         }
         }
+
+abstract class Handler<T> {
+          protected next : Handler<T> | null = null;
+          public SetNext(next : Handler<T>) : void {
+          this.next = next;
+          }
+          public HandleRequest(request : T) : void {
+          if (!this.CanHandle(request)) {
+          if (this.next !== null) {
+          this.next.HandleRequest(request);
+          }
+          return;
+          }
+          }
+          protected abstract CanHandle(request : T) : boolean;
+          }

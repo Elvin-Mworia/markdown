@@ -218,3 +218,21 @@ class ChainOfResponsibilityFactory {
                     return header1;
                     }
                     }
+/**takes the text that the user is typing in and splits it into individual lines, 
+ and creates our ParseElement,chain-of-responsibility handlers, and MarkdownDocument instance. 
+ Each line is then forwarded to Header1ChainHandler to start the processing of the line.
+Finally, we get the text from the document and return it so that we can
+display it in the label */
+class Markdown {
+      public ToHtml(text : string) : string {
+          let document : IMarkdownDocument = new MarkdownDocument();
+          let header1 : Header1ChainHandler = new ChainOfResponsibilityFactory().Build(document);
+          let lines : string[] = text.split(`\n`);
+          for (let index = 0; index < lines.length; index++) {
+                      let parseElement : ParseElement = new ParseElement();
+                      parseElement.CurrentLine = lines[index];
+                      header1.HandleRequest(parseElement);
+                      }
+                      return document.Get();
+                      }
+                      }

@@ -76,5 +76,12 @@ interface IVisitable {
   Accept(visitor : IVisitor, token : ParseElement, markdownDocument :
   IMarkdownDocument) : void;
   }
-
-  
+  abstract class VisitorBase implements IVisitor {
+    constructor (private readonly tagType : TagType, private readonly TagTypeToHtml : TagTypeToHtml) {}
+    Visit(token: ParseElement, markdownDocument: IMarkdownDocument): void
+    {
+    markdownDocument.Add(this.TagTypeToHtml.OpeningTag(this.tagType),
+    token.CurrentLine,
+    this.TagTypeToHtml.ClosingTag(this.tagType));
+    }
+    }
